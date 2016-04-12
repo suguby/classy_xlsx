@@ -3,8 +3,8 @@ from collections import OrderedDict
 
 from bunch import Bunch
 
-from classbased_xlsx.columns import XlsxColumn, XlsxColumnFabric
-from classbased_xlsx.core import XlsxField, logger
+from .columns import XlsxColumn, XlsxColumnFabric
+from .core import XlsxField, logger
 
 
 class XlsxRegion(XlsxField):

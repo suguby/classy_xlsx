@@ -10,9 +10,8 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='classy-xlsx',
-    version='0.1.2',
+    version='0.2.1',
     packages=['classy_xlsx'],
-    include_package_data=True,
     license='BSD License',
     description='The package allows you to create xlsx files in style models Django ORM.',
     long_description=README,
@@ -20,7 +19,11 @@ setup(
     author='Shandrinov Vadim',
     author_email='suguby@gmail.com',
     classifiers=[
-        'Development Status :: 2 - Beta',
+        # How mature is this project? Common values are
+        #   3 - Alpha
+        #   4 - Beta
+        #   5 - Production/Stable
+        'Development Status :: 4 - Beta',
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2.7',

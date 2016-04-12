@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from classbased_xlsx.core import XlsxField
-from classbased_xlsx.regions import XlsxRegion
+
+from .core import XlsxField
+from .regions import XlsxRegion
 
 
 class XlsxSheet(XlsxField):
