@@ -7,10 +7,14 @@ from bunch import Bunch
 
 
 class XlsxContext(object):
+    extra_context = None
     PARENT_ATTR_NAME = 'nope'
 
-    def __init__(self, **kwargs):
-        self._context = kwargs
+    def __init__(self, context=None):
+        self._context = Bunch(context) if context else None
+
+    def get_extra_context(self):
+        return None
 
     @property
     def parent(self):
@@ -22,7 +26,13 @@ class XlsxContext(object):
     @property
     def context(self):
         context = Bunch(self.parent.context.copy()) if self.parent else Bunch()
-        context.update(self._context)
+        if self._context:
+            context.update(self._context.copy())
+        if self.extra_context:
+            context.update(self.extra_context.copy())
+        more_context = self.get_extra_context().copy()
+        if more_context:
+            context.update(more_context)
         return context
 
     def update_context(self, **kwargs):

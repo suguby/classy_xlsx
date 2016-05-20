@@ -16,8 +16,8 @@ class XlsxWorkbook(object):
 
     file_name = '/tmp/workbook.xlsx'
 
-    def __init__(self, **kwargs):
-        self._context = Bunch(kwargs)
+    def __init__(self, context, **kwargs):
+        self._context = Bunch(context)
         self.sheets = []
         self._dest_file = self.get_filename()
         self.out_wb = xlsxwriter.Workbook(self._dest_file)

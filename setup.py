@@ -10,7 +10,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='classy-xlsx',
-    version='0.2.1',
+    version='0.2.2',
     packages=['classy_xlsx'],
     license='BSD License',
     description='The package allows you to create xlsx files in style models Django ORM.',
@@ -29,7 +29,7 @@ setup(
         'Programming Language :: Python :: 2.7',
     ],
     install_requires=[
-        'XlsxWriter==0.7.2',
+        'XlsxWriter==0.8.7',
         'bunch==1.0.1',
     ]
 )
