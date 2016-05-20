@@ -16,10 +16,6 @@ class XlsxColumn(XlsxField):
         self.region = None  # injected by region
         self._kwargs = Bunch(kwargs)
         self._total = 0
-        self.extra_init()
-
-    def extra_init(self):
-        pass
 
     @property
     def is_depended(self):

@@ -9,11 +9,12 @@ from .worksheet import XlsxSheetFabric, OneRegionXlsxSheet, XlsxSheet
 
 
 class XlsxWorkbook(XlsxContext):
-
     file_name = '/tmp/workbook.xlsx'
 
-    def __init__(self, context=None):
+    def __init__(self, context=None, file_name=None):
         super(XlsxWorkbook, self).__init__(context=context)
+        if file_name:
+            self.file_name = file_name
         self.sheets = []
         self._dest_file = self.get_filename()
         self.out_wb = xlsxwriter.Workbook(self._dest_file)
