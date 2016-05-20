@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
+from bunch import Bunch
+
 from .core import XlsxField
-from .utils import Bunch
 
 
 class XlsxColumn(XlsxField):

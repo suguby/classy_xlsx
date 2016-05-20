@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from collections import OrderedDict
 
-from .utils import Bunch
+from bunch import Bunch
 
 from .columns import XlsxColumn, XlsxColumnFabric
 from .core import XlsxField, ClassyXlsxException

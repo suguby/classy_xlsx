@@ -4,23 +4,35 @@ from unittest import TestCase
 
 from os import unlink
 
+import datetime
+
+from bunch import Bunch
+
 from classy_xlsx.columns import (
     FloatXlsxColumn, IntegerXlsxColumn, PercentXlsxColumn, RatioColumn, WeightedAverageColumn,
     TextXlsxColumn, UnicodeXlsxColumn,
     DateXlsxColumn, DateTimeXlsxColumn
 )
 from classy_xlsx.regions import XlsxTable
-from classy_xlsx.utils import Bunch
 from classy_xlsx.workbook import XlsxWorkbook
 from classy_xlsx.worksheet import XlsxSheet
+
+
+class TestRatioColumn(RatioColumn):
+    dividend = 'int_col'
+    divisor = 'float_col'
+
+
+class TestWeightedAverageColumn(WeightedAverageColumn):
+    divisor = 'int_col'
 
 
 class TestXlsxTable(XlsxTable):
     int_col = IntegerXlsxColumn()
     float_col = FloatXlsxColumn()
     percent_col = PercentXlsxColumn()
-    ratio_col = RatioColumn()
-    wa_col = WeightedAverageColumn()
+    ratio_col = TestRatioColumn()
+    wa_col = TestWeightedAverageColumn()
     text_col = TextXlsxColumn()
     uni_col = UnicodeXlsxColumn()
     date_col = DateXlsxColumn()
@@ -32,19 +44,21 @@ class TestXlsxTable(XlsxTable):
                 int_col=1,
                 float_col=10.1,
                 percent_col=0.3,
-                text_col = 'some text',
-                uni_col = u'какой-то текст',
-                date_col = '11-11-2016',
-                datetime_col = '11-11-2016 11:11:11',
+                wa_col=100,
+                text_col='some text',
+                uni_col=u'какой-то текст',
+                date_col=datetime.date(year=2016, month=01, day=01),
+                datetime_col=datetime.datetime(year=2016, month=01, day=01, hour=12),
             ),
             Bunch(
                 int_col=2,
                 float_col=20.2,
                 percent_col=0.5,
+                wa_col=50,
                 text_col='some text',
                 uni_col=u'какой-то текст',
-                date_col='11-11-2016',
-                datetime_col='11-11-2016 11:11:11',
+                date_col=datetime.date(year=2016, month=01, day=01),
+                datetime_col=datetime.datetime(year=2016, month=01, day=01, hour=12),
             ),
         ]
 
@@ -58,7 +72,6 @@ class TestXlsxWorkbook(XlsxWorkbook):
 
 
 class ContextTest(TestCase):
-
     def setUp(self):
         self.out_file = tempfile.NamedTemporaryFile(delete=False)
         self.wb = TestXlsxWorkbook(file_name=self.out_file.name)

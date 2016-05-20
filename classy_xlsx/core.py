@@ -2,7 +2,7 @@
 from collections import OrderedDict
 import copy
 
-from .utils import Bunch
+from bunch import Bunch
 
 
 class XlsxContext(object):

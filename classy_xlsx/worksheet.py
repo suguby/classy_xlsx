@@ -29,7 +29,6 @@ class XlsxSheet(XlsxField):
         self.row_num = 0
         self.prepare_to_xlsx()
         self.before_to_xlsx()
-        self._context.update(**self.extra_context())
         for i, name in enumerate(self.regions):
             region = self.regions[name]
             region.to_xlsx()
