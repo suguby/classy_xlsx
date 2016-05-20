@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from collections import OrderedDict
 
-from bunch import Bunch
+from .utils import Bunch
 
 from .columns import XlsxColumn, XlsxColumnFabric
-from .core import XlsxField, logger
+from .core import XlsxField, ClassyXlsxException
 
 
 class XlsxRegion(XlsxField):
@@ -58,7 +58,7 @@ class XlsxTable(XlsxRegion):
                 del self.columns[name]
                 delattr(self, name)
             except KeyError:
-                logger.error("No column {} in {}".format(name, self.__class__.__name__))
+                raise ClassyXlsxException("No column {} in {}".format(name, self.__class__.__name__))
 
     def _humanize_row(self, res_row):
         if not res_row:

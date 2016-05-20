@@ -2,7 +2,6 @@
 from collections import OrderedDict
 from shutil import rmtree
 
-from bunch import Bunch
 import xlsxwriter
 
 from classy_xlsx.core import XlsxContext

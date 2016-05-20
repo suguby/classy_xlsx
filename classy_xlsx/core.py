@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from collections import OrderedDict
-import logging
 import copy
 
-from bunch import Bunch
+from .utils import Bunch
 
 
 class XlsxContext(object):
@@ -69,5 +68,6 @@ class XlsxField(XlsxContext):
         return OrderedDict((field.name, field) for field in fields)
 
 
-logger = logging.getLogger()
+class ClassyXlsxException(Exception):
+    pass
 
