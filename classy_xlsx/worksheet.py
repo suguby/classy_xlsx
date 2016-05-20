@@ -42,10 +42,6 @@ class XlsxSheet(XlsxField):
             sheet_name = self.get_name()
             self.out_ws = self.workbook.get_result_ws(sheet_name=sheet_name)
 
-    @staticmethod
-    def extra_context():
-        return {}
-
     def before_to_xlsx(self):
         pass
 

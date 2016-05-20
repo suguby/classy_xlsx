@@ -5,28 +5,36 @@ from shutil import rmtree
 from bunch import Bunch
 import xlsxwriter
 
+from classy_xlsx.core import XlsxContext
 from .worksheet import XlsxSheetFabric, OneRegionXlsxSheet, XlsxSheet
 
 
-class XlsxWorkbook(object):
-    # sheets here
-    # google = GoogleSheet()
-    # yandex = YandexSheet()
-    # etc.
+class XlsxWorkbook(XlsxContext):
 
     file_name = '/tmp/workbook.xlsx'
 
-    def __init__(self, context, **kwargs):
-        self._context = Bunch(context)
+    def __init__(self, context=None):
+        super(XlsxWorkbook, self).__init__(context=context)
         self.sheets = []
         self._dest_file = self.get_filename()
         self.out_wb = xlsxwriter.Workbook(self._dest_file)
         self.formats = {}
         self.tmp_dir = None
 
-    @property
-    def context(self):
-        return self._context
+        raw_sheets = XlsxSheet.copy_fields_to_instance(instance=self)
+        self.sheets = OrderedDict()
+        for name, sheet in raw_sheets.iteritems():
+            if isinstance(sheet, XlsxSheetFabric):
+                i = 0
+                for sub_sheet in sheet.get_sheets():
+                    # TODO имя можно вынести в фабрику
+                    sub_sheet_name = '{}_{}'.format(name, i)
+                    sub_sheet.workbook = self
+                    sub_sheet.name = sub_sheet_name
+                    self.sheets[sub_sheet_name] = sub_sheet
+                    i += 1
+            else:
+                self.sheets[name] = sheet
 
     def get_format(self, fmt):
         key = repr(fmt)
@@ -48,21 +56,6 @@ class XlsxWorkbook(object):
         return ws
 
     def make_report(self):
-        self.sheets = OrderedDict()
-        raw_sheets = XlsxSheet.copy_fields_to_instance(instance=self)
-        for name, sheet in raw_sheets.iteritems():
-            if isinstance(sheet, XlsxSheetFabric):
-                i = 0
-                for sub_sheet in sheet.get_sheets():
-                    # TODO имя можно вынести в фабрику
-                    sub_sheet_name = '{}_{}'.format(name, i)
-                    sub_sheet.workbook = self
-                    sub_sheet.name = sub_sheet_name
-                    self.sheets[sub_sheet_name] = sub_sheet
-                    i += 1
-            else:
-                self.sheets[name] = sheet
-
         self.before_make_report()
         sheets_by_priority = []
         for sheet in self.sheets.values():

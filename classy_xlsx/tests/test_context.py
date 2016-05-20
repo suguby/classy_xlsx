@@ -29,5 +29,5 @@ class ContextTest(TestCase):
         self.wb = TestXlsxWorkbook(context=dict(param1=1))
 
     def test_inheritance(self):
-        self.wb.make_report()
+        # self.wb.make_report()
         self.assertEquals(self.wb.sheet.table.col.context.param1, 1)

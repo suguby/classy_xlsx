@@ -42,6 +42,7 @@ class XlsxTable(XlsxRegion):
     def __init__(self, **kwargs):
         super(XlsxTable, self).__init__(**kwargs)
         self.columns = OrderedDict()
+        self.expand_columns()
         self.start_row = 0
         self.end_row = 0
         self._depended_columns = None
@@ -147,8 +148,6 @@ class XlsxTable(XlsxRegion):
         pass
 
     def _to_xlsx(self):
-        self.expand_columns()
-
         table_data = [[row[name] for name, col in self.columns.iteritems()] for row in self.get_data()]
 
         total_row = None

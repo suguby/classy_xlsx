@@ -14,7 +14,7 @@ class XlsxContext(object):
         self._context = Bunch(context) if context else None
 
     def get_extra_context(self):
-        return None
+        return self.extra_context
 
     @property
     def parent(self):
@@ -28,11 +28,9 @@ class XlsxContext(object):
         context = Bunch(self.parent.context.copy()) if self.parent else Bunch()
         if self._context:
             context.update(self._context.copy())
-        if self.extra_context:
-            context.update(self.extra_context.copy())
-        more_context = self.get_extra_context().copy()
-        if more_context:
-            context.update(more_context)
+        extra_context = self.get_extra_context()
+        if extra_context:
+            context.update(extra_context.copy())
         return context
 
     def update_context(self, **kwargs):
