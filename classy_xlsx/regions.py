@@ -34,7 +34,7 @@ class XlsxTable(XlsxRegion):
     # columns here
     # clicks = IntegerXlsxColumn(u'Клики', width=27)
     # etc.
-
+    # TODO поместить все параметры в контекст  - можно будет переопределять при вызове
     table_style = None  # 'Table Style Medium 2'
     need_total = True
     total_row_format = None

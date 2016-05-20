@@ -6,14 +6,19 @@ from bunch import Bunch
 
 
 class XlsxContext(object):
-    extra_context = None
+    default_context = None
     PARENT_ATTR_NAME = 'nope'
 
     def __init__(self, context=None):
-        self._context = Bunch(context) if context else None
+        if self.default_context:
+            self._context = self.default_context.copy()
+        else:
+            self._context = Bunch()
+        if context:
+            self._context.update(context)
 
     def get_extra_context(self):
-        return self.extra_context
+        return dict()
 
     @property
     def parent(self):

@@ -55,7 +55,11 @@ class XlsxWorkbook(XlsxContext):
             ws = self.out_wb.add_worksheet(sheet_name)
         return ws
 
-    def make_report(self):
+    def make_report(self, context=None, file_name=None):
+        if context:
+            self._context = context
+        if file_name:
+            self.file_name = file_name
         self.before_make_report()
         sheets_by_priority = []
         for sheet in self.sheets.values():

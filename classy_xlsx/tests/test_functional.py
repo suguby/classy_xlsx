@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import tempfile
 from unittest import TestCase
 
@@ -7,6 +8,8 @@ from os import unlink
 import datetime
 
 from bunch import Bunch
+from openpyxl import load_workbook
+
 
 from classy_xlsx.columns import (
     FloatXlsxColumn, IntegerXlsxColumn, PercentXlsxColumn, RatioColumn, WeightedAverageColumn,
@@ -28,15 +31,15 @@ class TestWeightedAverageColumn(WeightedAverageColumn):
 
 
 class TestXlsxTable(XlsxTable):
-    int_col = IntegerXlsxColumn()
-    float_col = FloatXlsxColumn()
-    percent_col = PercentXlsxColumn()
-    ratio_col = TestRatioColumn()
-    wa_col = TestWeightedAverageColumn()
-    text_col = TextXlsxColumn()
-    uni_col = UnicodeXlsxColumn()
-    date_col = DateXlsxColumn()
-    datetime_col = DateTimeXlsxColumn()
+    int_col = IntegerXlsxColumn(title=u'')
+    float_col = FloatXlsxColumn(title=u'')
+    percent_col = PercentXlsxColumn(title=u'')
+    ratio_col = TestRatioColumn(title=u'')
+    wa_col = TestWeightedAverageColumn(title=u'')
+    text_col = TextXlsxColumn(title=u'')
+    uni_col = UnicodeXlsxColumn(title=u'')
+    date_col = DateXlsxColumn(title=u'')
+    datetime_col = DateTimeXlsxColumn(title=u'')
 
     def get_queryset(self):
         return [
@@ -73,12 +76,17 @@ class TestXlsxWorkbook(XlsxWorkbook):
 
 class ContextTest(TestCase):
     def setUp(self):
-        self.out_file = tempfile.NamedTemporaryFile(delete=False)
-        self.wb = TestXlsxWorkbook(file_name=self.out_file.name)
+        ff, self.out_file_name = tempfile.mkstemp(suffix='.xlsx')
+        os.close(ff)
+        self.wb = TestXlsxWorkbook(file_name=self.out_file_name)
 
     def test_all(self):
         self.wb.make_report()
+        wb2 = load_workbook(self.wb.file_name)
+        self.assertIn('sheet', wb2.get_sheet_names())
+        sheet = wb2.get_sheet_by_name('sheet')
+        print sheet
 
-    def tearDown(self):
-        self.out_file.close()
-        unlink(self.out_file.name)
+
+    # def tearDown(self):
+    #     unlink(self.out_file_name)
