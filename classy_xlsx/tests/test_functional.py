@@ -7,7 +7,6 @@ from os import unlink
 
 import datetime
 
-from bunch import Bunch
 from openpyxl import load_workbook
 
 
@@ -16,6 +15,7 @@ from classy_xlsx.columns import (
     TextXlsxColumn, UnicodeXlsxColumn,
     DateXlsxColumn, DateTimeXlsxColumn
 )
+from classy_xlsx.core import Bunch
 from classy_xlsx.regions import XlsxTable
 from classy_xlsx.workbook import XlsxWorkbook
 from classy_xlsx.worksheet import XlsxSheet

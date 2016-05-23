@@ -2,7 +2,16 @@
 from collections import OrderedDict
 import copy
 
-from bunch import Bunch
+
+class Bunch(dict):
+    def __getattr__(self, k):
+        try:
+            return self.__getitem__(k)
+        except KeyError:
+            raise AttributeError(k)
+    __setattr__ = dict.__setitem__
+    __getstate__ = lambda self: self.__dict__
+    __setstate__ = lambda (self, state): setattr(self, '__dict__', state)
 
 
 class XlsxContext(object):
@@ -29,12 +38,12 @@ class XlsxContext(object):
 
     @property
     def context(self):
-        context = Bunch(self.parent.context.copy()) if self.parent else Bunch()
+        context = Bunch(copy.deepcopy(self.parent.context)) if self.parent else Bunch()
         if self._context:
-            context.update(self._context.copy())
+            context.update(copy.deepcopy(self._context))
         extra_context = self.get_extra_context()
         if extra_context:
-            context.update(extra_context.copy())
+            context.update(copy.deepcopy(extra_context))
         return context
 
     def update_context(self, **kwargs):

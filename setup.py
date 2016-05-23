@@ -30,6 +30,6 @@ setup(
     ],
     install_requires=[
         'XlsxWriter==0.8.7',
-        'bunch==1.0.1',
+        # 'bunch==1.0.1',
     ]
 )

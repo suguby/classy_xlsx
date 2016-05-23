@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 from collections import OrderedDict
 
-from bunch import Bunch
-
 from .columns import XlsxColumn, XlsxColumnFabric
-from .core import XlsxField, ClassyXlsxException
+from .core import XlsxField, ClassyXlsxException, Bunch
 
 
 class XlsxRegion(XlsxField):
