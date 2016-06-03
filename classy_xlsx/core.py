@@ -13,9 +13,14 @@ class Bunch(dict):
     __getstate__ = lambda self: self.__dict__
     __setstate__ = lambda (self, state): setattr(self, '__dict__', state)
 
+    def __deepcopy__(self, memo):
+        copied = copy.deepcopy(self.copy(), memo)
+        return copied
+
 
 class XlsxContext(object):
     default_context = None
+    extra_context = None
     PARENT_ATTR_NAME = 'nope'
 
     def __init__(self, context=None):
@@ -25,9 +30,6 @@ class XlsxContext(object):
             self._context = Bunch()
         if context:
             self._context.update(context)
-
-    def get_extra_context(self):
-        return dict()
 
     @property
     def parent(self):
@@ -41,9 +43,8 @@ class XlsxContext(object):
         context = Bunch(copy.deepcopy(self.parent.context)) if self.parent else Bunch()
         if self._context:
             context.update(copy.deepcopy(self._context))
-        extra_context = self.get_extra_context()
-        if extra_context:
-            context.update(copy.deepcopy(extra_context))
+        if self.extra_context:
+            context.update(copy.deepcopy(self.extra_context))
         return context
 
     def update_context(self, **kwargs):
