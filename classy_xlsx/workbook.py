@@ -27,11 +27,8 @@ class XlsxWorkbook(XlsxContext):
             if isinstance(sheet, XlsxSheetFabric):
                 i = 0
                 for sub_sheet in sheet.get_sheets():
-                    # TODO имя можно вынести в фабрику
-                    sub_sheet_name = '{}_{}'.format(name, i)
                     sub_sheet.workbook = self
-                    sub_sheet.name = sub_sheet_name
-                    self.sheets[sub_sheet_name] = sub_sheet
+                    self.sheets[sub_sheet.get_name()] = sub_sheet
                     i += 1
             else:
                 self.sheets[name] = sheet

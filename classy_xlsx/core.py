@@ -52,13 +52,13 @@ class XlsxContext(object):
 
 
 class XlsxField(XlsxContext):
-    __position = 0
+    _position = 0
 
     def __init__(self, **kwargs):
         super(XlsxField, self).__init__(**kwargs)
         self.name = None
-        XlsxField.__position += 1
-        self.position = XlsxField.__position
+        XlsxField._position += 1
+        self.position = XlsxField._position
 
     @classmethod
     def copy_fields_to_instance(cls, instance, **attrs):

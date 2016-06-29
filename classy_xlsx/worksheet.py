@@ -21,6 +21,7 @@ class XlsxSheet(XlsxField):
         self.regions = XlsxRegion.copy_fields_to_instance(instance=self)
         self.row_num = 0
         self.out_ws = None
+        self.name = 'sheet_{}'.format(self._position)
 
     def get_name(self):
         return self.name

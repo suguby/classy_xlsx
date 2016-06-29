@@ -13,9 +13,7 @@ class TestXlsxColumn(XlsxColumn):
 
 class TestXlsxTable(XlsxTable):
     col = TestXlsxColumn()
-
-    def get_extra_context(self):
-        return dict(param3=3)
+    extra_context = dict(param3=3)
 
 
 class TestXlsxSheet(XlsxSheet):
@@ -35,12 +33,15 @@ class ContextTest(TestCase):
 
     def test_inheritance(self):
         self.wb = TestXlsxWorkbook(context=dict(param1=1))
+        self.wb.sheet.table.expand_columns()
         self.assertEquals(self.wb.sheet.table.col.context.param1, 1)
 
     def test_extra_context(self):
         self.wb = Test2XlsxWorkbook()
+        self.wb.sheet.table.expand_columns()
         self.assertEquals(self.wb.sheet.table.col.context.param2, 2)
 
     def test_get_extra_context(self):
         self.wb = TestXlsxWorkbook()
+        self.wb.sheet.table.expand_columns()
         self.assertEquals(self.wb.sheet.table.col.context.param3, 3)
